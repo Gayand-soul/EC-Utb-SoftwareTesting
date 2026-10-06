@@ -1,7 +1,8 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class CounterTest {
@@ -41,6 +42,38 @@ public class CounterTest {
         counter.addLine("");
         assertEquals(1, counter.getRows());
         assertEquals(0, counter.getLetters());
+        assertEquals(0, counter.getWords());
     }
+
+    //Testar att ord ränkas rätt, flera mellanslag
+    @Test
+    void countsWordsWithExtraSpaces(){
+        Counter counter = new Counter();
+        counter.addLine("Vi är  tillbaks på noll ");//5 ord
+        counter.addLine("   Men ingen kommer sörja   ");//4 ord, stora mellanrum
+        assertEquals(9, counter.getWords());
+
+    }
+
+    // Testar att det längsta ordet hittas över flera rader
+    @Test
+    void finsLongestWord(){
+        Counter counter = new Counter();
+        counter.addLine("Vi skulle kommit längre");
+        counter.addLine("Men räckte inte till");
+        counter.addLine("Texten är hämtad från Jockes gästboksinlägg");
+        assertEquals("gästboksinlägg", counter.getLongestWord());
+    }
+
+    // Testar att stop känns igen, men inte liknande ord
+    @Test
+    void recognizesStop() {
+        Counter counter = new Counter();
+        assertTrue(counter.isStop("stop"));
+        assertFalse(counter.isStop("stopp"));
+        assertFalse(counter.isStop("Stop"));
+        assertFalse(counter.isStop("hej"));
+    }
+
 
 }

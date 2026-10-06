@@ -1,7 +1,6 @@
-/*DEL 2:
+/*DEL 2,3,4 osv:
 -uppgift:Skriv ett program som läser in text ifrån kommandoraden rad
  -för rad tills användaren skriver ordet stop.
--Med switch:
 * Uppgift:När användaren är klar skriver programmet ut
 * antal tecken och hur många rader som användaren har skrivit,
 * exklusive raden med ordet stop*/
@@ -22,15 +21,14 @@ public class Main {
         System.out.println("Please enter text (type 'stop' to exit): ");
         String text = input.nextLine();
 
-        switch (text) {
-            case "stop":
-                System.out.println("total rows: " + counter.getRows());
-                System.out.println("total letters: " + counter.getLetters());
-                break;
-
-            default:
-                counter.addLine(text);
-                main(args);
+        if(counter.isStop(text)){
+            System.out.println("total rows: " + counter.getRows());
+            System.out.println("total letters: " + counter.getLetters());
+            System.out.println("total words: " + counter.getWords());
+            System.out.println("longest word: " + counter.getLongestWord());
+        }else {
+            counter.addLine(text);
+            main(args);
         }
     }
 }
